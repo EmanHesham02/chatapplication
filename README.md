@@ -1,6 +1,6 @@
 **RMI Multiple Clients Chat Program**
 ` You Can Use This Program and Can Improve To Chat Between Two Clients or More . 
-` the chat conversation will save in the file chatHistoryFile.txt.
+` the chat conversation will save in the file chatHistoryFile.txt it will created automaticaly when start chat .
 
 **- Program Contains Three Java Files.**
 1. ChatInterface - Which Is A Interface Common For Both Client and Server.
