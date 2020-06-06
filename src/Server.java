@@ -8,6 +8,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Server extends UnicastRemoteObject implements ChatInterface {
     private static final long serialVersionUID = 1L;
@@ -61,6 +62,12 @@ public class Server extends UnicastRemoteObject implements ChatInterface {
     public static void main(String[] arg) throws RemoteException, MalformedURLException, AlreadyBoundException {
         Registry registry = LocateRegistry.createRegistry(1099);
         registry.bind("RMIServer", new Server());
-        System.out.println("server running now........");
+        System.out.println("server running now........\n");
+        System.out.println(".....write shutdown to close server.....");
+        Scanner in = new Scanner(System.in);
+        String serverShutDown = in.next();
+        if (serverShutDown.equalsIgnoreCase("shutdown".trim())) {
+            System.exit(0);
+        }
     }
 }
