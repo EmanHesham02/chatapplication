@@ -1,4 +1,5 @@
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
@@ -8,9 +9,11 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Server extends UnicastRemoteObject implements ChatInterface{
+public class Server extends UnicastRemoteObject implements ChatInterface {
     private static final long serialVersionUID = 1L;
     private ArrayList<ChatInterface> clientList;
+    FileOutputStream oFile;
+    ChatHistoryFile chatHistoryFile = new ChatHistoryFile();
 
     protected Server() throws RemoteException {
         clientList = new ArrayList<ChatInterface>();
@@ -31,19 +34,22 @@ public class Server extends UnicastRemoteObject implements ChatInterface{
     }
 
     @Override
-    public int removeClient(ChatInterface client) {
+    public void removeClient(ChatInterface client) {
         clientList.remove(client);
-        return clientList.size();
     }
 
     @Override
     public synchronized void broadcastMessage(String clientname, String message) {
-        for (int i = 0; i < clientList.size(); i++) {
-            try {
+        try {
+            for (int i = 0; i < clientList.size(); i++) {
                 clientList.get(i).sendMessage(clientname.toUpperCase() + " : " + message);
-            } catch (IOException e) {
-
             }
+            oFile = chatHistoryFile.saveChatInFile(oFile, clientname.toUpperCase() + " : " + message);
+            if (clientList.size() == 0) {
+                chatHistoryFile.closeFile(oFile);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

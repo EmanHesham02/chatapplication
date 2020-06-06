@@ -10,5 +10,5 @@ public interface ChatInterface extends Remote {
 
     void sendMessage(String message) throws IOException;
 
-    int removeClient(ChatInterface client)throws RemoteException;
+    void removeClient(ChatInterface client)throws RemoteException;
 }

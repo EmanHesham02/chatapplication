@@ -13,9 +13,8 @@ public class Client extends UnicastRemoteObject implements ChatInterface, Runnab
     private ChatInterface server;
     private String ClientName;
     boolean chkExit = true;
-    boolean chkLog ;
-    FileOutputStream oFile;
-    ChatHistoryFile chatHistoryFile = new ChatHistoryFile();
+    boolean chkLog;
+
 
     protected Client(ChatInterface chatInterface, String clientname, String password) throws RemoteException {
         this.server = chatInterface;
@@ -26,12 +25,9 @@ public class Client extends UnicastRemoteObject implements ChatInterface, Runnab
 
     public void sendMessage(String message) throws IOException {
         System.out.println(message);
-        oFile = chatHistoryFile.saveChatInFile(oFile, message);
     }
 
-    @Override
-    public int removeClient(ChatInterface client) {
-        return 0;
+    public void removeClient(ChatInterface client) {
     }
 
     @Override
@@ -57,12 +53,9 @@ public class Client extends UnicastRemoteObject implements ChatInterface, Runnab
                     if (message.equalsIgnoreCase("Bye Bye")) {
                         server.broadcastMessage(ClientName, message);
                         chkExit = false;
-                        int clintList = server.removeClient(this);
-                        if (clintList == 0) {
-                            chatHistoryFile.closeFile(oFile);
-                            System.out.println("\nSuccessfully Logout From Chat \nThank You For Using...");
-                            System.exit(0);
-                        }
+                        server.removeClient(this);
+                        System.out.println("\nSuccessfully Logout From Chat \nThank You For Using...");
+                        System.exit(0);
                     } else {
                         server.broadcastMessage(ClientName, message);
                     }
