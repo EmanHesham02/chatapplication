@@ -9,7 +9,7 @@
 
 NOTE : users names and passwords  are saved in clientCredintialsfile.txt to authenticate this users
 
-**Instructions**
+****Instructions****
 
 1- Start the server first (main method: Server.java).
 
