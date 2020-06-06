@@ -21,6 +21,6 @@ NOTE : users names and passwords  are saved in clientCredintialsfile.txt to auth
 
 5- to logout from chat write "Bye Bye".
 
-6- to close server wite shutdown.
+6- to close server write "shutdown".
 
 
